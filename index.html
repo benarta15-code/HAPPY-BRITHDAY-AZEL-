@@ -1,1 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Azel! 💖</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background-color: #ffe6ee;
+      color: #5a3d46;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .card {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(255, 182, 193, 0.6);
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+    h2, h3 {
+      color: #ff4d8d;
+      margin-bottom: 15px;
+    }
+    p {
+      line-height: 1.6;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+    input[type="password"] {
+      width: 80%;
+      padding: 10px;
+      border: 2px solid #ffb6c1;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 16px;
+      outline: none;
+      margin-bottom: 15px;
+    }
+    button {
+      background-color: #ff4d8d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #ff1f71;
+      transform: scale(1.05);
+    }
+    /* Animasi Tahan Tombol */
+    .hold-btn {
+      user-select: none;
+      background-color: #ff85a2;
+      padding: 12px 24px;
+      border-radius: 25px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+    }
+    .hold-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background-color: #ff1f71;
+      transition: width 0.1s linear;
+      z-index: 1;
+    }
+    .hold-text {
+      position: relative;
+      z-index: 2;
+    }
+    /* Kado Geser */
+    .gift-box {
+      font-size: 60px;
+      cursor: grab;
+      user-select: none;
+      margin: 20px 0;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    /* Slider Persentase */
+    .slider-container {
+      margin: 20px 0;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: #ff4d8d;
+    }
+    .hidden {
+      display: none;
+    }
+    /* Hati Melayang */
+    .heart {
+      position: absolute;
+      color: #ff4d8d;
+      animation: floatUp 2s ease-in forwards;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+    }
+    a.music-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #ff4d8d;
+      font-weight: bold;
+      text-decoration: none;
+      border: 1px dashed #ff4d8d;
+      padding: 8px 15px;
+      border-radius: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- STEP 1: Password -->
+    <div id="step1">
+      <h2>Rahasia Azel 🔒</h2>
+      <p>Masukkan tanggal lahir kamu (DDMMYY) untuk membuka:</p>
+      <input type="password" id="passInput" placeholder="******" maxlength="6">
+      <br>
+      <button onclick="checkPassword()">Buka</button>
+      <p id="passErr" style="color: red; margin-top: 10px; font-size: 12px;"></p>
+    </div>
+
+    <!-- STEP 2: Hold to Continue -->
+    <div id="step2" class="hidden">
+      <h2>Hai Elsa Raisa Shafitri ✨</h2>
+      <p>Tahan tombol di bawah ini sebentar ya...</p>
+      <div class="hold-btn" id="holdBtn1">
+        <div class="hold-progress" id="holdProg1"></div>
+        <span class="hold-text">Tahan 2 Detik ❤️</span>
+      </div>
+    </div>
+
+    <!-- STEP 3: Geser Kado -->
+    <div id="step3" class="hidden">
+      <h2>Ada Kado Buat Kamu 🎁</h2>
+      <p>Geser kado ini ke kanan untuk membukanya!</p>
+      <div class="gift-box" id="gift">🎁</div>
+    </div>
+
+    <!-- STEP 4: Pesan Manis -->
+    <div id="step4" class="hidden">
+      <h3>Dear Azel,</h3>
+      <p>Selamat ulang tahun yang ke-15 ya! 🎉</p>
+      <p>Semoga di usiamu yang baru ini, langkahmu makin dimudahkan, selalu dikelilingi kebahagiaan, dan makin dekat dengan semua cita-citamu. Tetap jadi Azel yang baik, ceria, dan menginspirasi ya!</p>
+      <button onclick="nextStep(5)">Lanjut ➡️</button>
+    </div>
+
+    <!-- STEP 5: Pengirim -->
+    <div id="step5" class="hidden">
+      <h2>Special Gift From:</h2>
+      <h1 style="color: #ff4d8d; margin: 15px 0;">✨ Atar ✨</h1>
+      <p>Tahan tombol ini lagi untuk melanjutkannya ya!</p>
+      <div class="hold-btn" id="holdBtn2">
+        <div class="hold-progress" id="holdProg2"></div>
+        <span class="hold-text">Tahan Lagi 💕</span>
+      </div>
+    </div>
+
+    <!-- STEP 6: Persentase Sayang -->
+    <div id="step6" class="hidden">
+      <h2>Seberapa persen sayang kamu ke Atar? 🙈</h2>
+      <div class="slider-container">
+        <input type="range" id="loveRange" min="0" max="100" value="50" oninput="updateLoveVal(this.value)">
+        <h2 id="loveVal" style="margin-top: 10px;">50%</h2>
+      </div>
+      <button onclick="nextStep(7)">Lanjut ➡️</button>
+    </div>
+
+    <!-- STEP 7: Link Lagu & Kuis -->
+    <div id="step7" class="hidden">
+      <h2>Lagu Khusus Buat Azel 🎶</h2>
+      <p>Dengarkan lagu pilihan ini ya:</p>
+      <a href="https://open.spotify.com" target="_blank" class="music-link">🎧 Putar Lagu Spesial</a>
+      <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ffe6ee;">
+      
+      <div id="quiz1">
+        <p><b>Kamu sayang Atar gak, Azel? 🥺</b></p>
+        <button onclick="answerQuiz(1, 'Sayang banget!')">Sayang Banget!</button>
+        <button onclick="answerQuiz(1, 'Sayang dong!')">Sayang Dong!</button>
+      </div>
+
+      <div id="quiz2" class="hidden">
+        <p><b>Seneng gak? Bagus kan reward-nya? 💖</b></p>
+        <button onclick="answerQuiz(2, 'Seneng banget!')">Seneng Banget!</button>
+        <button onclick="answerQuiz(2, 'Bagus bgt!')">Suka Banget!</button>
+      </div>
+    </div>
+
+    <!-- STEP 8: Penutup -->
+    <div id="step8" class="hidden">
+      <h2>Terima Kasih Ya! 💖</h2>
+      <p>Makasih udah membaca pesan ini sampai selesai, Azel. Semoga hari-harimu selalu menyenangkan!</p>
+      <div style="font-size: 40px; margin-top: 15px;">🌸✨👑✨🌸</div>
+    </div>
+
+  </div>
+
+  <script>
+    // 1. Password Check
+    function checkPassword() {
+      const input = document.getElementById('passInput').value;
+      if (input === "091011") {
+        nextStep(2);
+      } else {
+        document.getElementById('passErr').innerText = "Password salah! Coba tanggal lahir kamu (091011)";
+      }
+    }
+
+    // Navigation
+    function nextStep(step) {
+      for (let i = 1; i <= 8; i++) {
+        document.getElementById('step' + i).classList.add('hidden');
+      }
+      document.getElementById('step' + step).classList.remove('hidden');
+      createHearts();
+    }
+
+    // Animasi Hati
+    function createHearts() {
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.classList.add('heart');
+          heart.innerHTML = '💖';
+          heart.style.left = Math.random() * 80 + 10 + '%';
+          heart.style.top = Math.random() * 50 + 40 + '%';
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 2000);
+        }, i * 150);
+      }
+    }
+
+    // 2. Logic Hold Button
+    function setupHoldButton(btnId, progId, targetStep) {
+      const btn = document.getElementById(btnId);
+      const prog = document.getElementById(progId);
+      let timer;
+
+      const startHold = () => {
+        prog.style.width = '100%';
+        timer = setTimeout(() => {
+          nextStep(targetStep);
+        }, 1500);
+      };
+
+      const cancelHold = () => {
+        clearTimeout(timer);
+        prog.style.width = '0%';
+      };
+
+      btn.addEventListener('mousedown', startHold);
+      btn.addEventListener('mouseup', cancelHold);
+      btn.addEventListener('touchstart', startHold);
+      btn.addEventListener('touchend', cancelHold);
+    }
+
+    setupHoldButton('holdBtn1', 'holdProg1', 3);
+    setupHoldButton('holdBtn2', 'holdProg2', 6);
+
+    // 3. Logic Drag Kado
+    const gift = document.getElementById('gift');
+    let startX = 0;
+
+    gift.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
+    gift.addEventListener('touchend', (e) => {
+      let endX = e.changedTouches[0].clientX;
+      if (endX - startX > 50) nextStep(4);
+    });
+    
+    gift.addEventListener('mousedown', (e) => startX = e.clientX);
+    gift.addEventListener('mouseup', (e) => {
+      let endX = e.clientX;
+      if (endX - startX > 50) nextStep(4);
+    });
+
+    // 4. Update Slider
+    function updateLoveVal(val) {
+      document.getElementById('loveVal').innerText = val + '%';
+    }
+
+    // 5. Kuis Logic
+    function answerQuiz(num, text) {
+      createHearts();
+      if (num === 1) {
+        document.getElementById('quiz1').classList.add('hidden');
+        document.getElementById('quiz2').classList.remove('hidden');
+      } else if (num === 2) {
+        nextStep(8);
+      }
+    }
+  </script>
+</body>
+</html>
 
