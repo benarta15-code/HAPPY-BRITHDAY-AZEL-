@@ -1,1 +1,513 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Elsa Azel! ❄️✨</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+      color: #2c3e50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Partikel Salju */
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: #fff;
+      font-size: 1em;
+      opacity: 0.8;
+      pointer-events: none;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(105vh) rotate(360deg);
+      }
+    }
+
+    /* Container Kartu */
+    .card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      padding: 30px 25px;
+      border-radius: 24px;
+      box-shadow: 0 15px 35px rgba(0, 119, 182, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+      z-index: 10;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Animasi Halus Transisi Halaman */
+    .step {
+      opacity: 0;
+      transform: scale(0.95) translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      display: none;
+    }
+    .step.active {
+      display: block;
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    h2, h3 {
+      color: #0077b6;
+      margin-bottom: 15px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    p {
+      line-height: 1.6;
+      font-size: 14.5px;
+      margin-bottom: 18px;
+      color: #4a6572;
+    }
+
+    input[type="password"] {
+      width: 80%;
+      padding: 12px;
+      border: 2px solid #90e0ef;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 18px;
+      outline: none;
+      margin-bottom: 15px;
+      transition: border-color 0.3s;
+    }
+    input[type="password"]:focus {
+      border-color: #0077b6;
+    }
+
+    button {
+      background: linear-gradient(45deg, #0077b6, #00b4d8);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    button:active {
+      transform: scale(0.95);
+    }
+
+    /* Hold Button */
+    .hold-btn {
+      user-select: none;
+      background: #caf0f8;
+      border: 2px solid #90e0ef;
+      padding: 14px 28px;
+      border-radius: 30px;
+      color: #0077b6;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .hold-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00b4d8, #90e0ef);
+      transition: width 0.1s linear;
+      z-index: 1;
+    }
+    .hold-text {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Kado Besar Interaktif */
+    .gift-stage {
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      position: relative;
+    }
+
+    .big-gift-wrapper {
+      position: relative;
+      cursor: grab;
+      user-select: none;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+    }
+    .big-gift-wrapper:active {
+      cursor: grabbing;
+    }
+
+    .big-gift {
+      font-size: 100px;
+      filter: drop-shadow(0 10px 20px rgba(0, 119, 182, 0.3));
+      animation: pulseGift 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseGift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.06) rotate(-3deg); }
+    }
+
+    .drag-hint {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #0077b6;
+      font-weight: bold;
+      letter-spacing: 1px;
+      animation: bounceText 1.5s infinite;
+    }
+
+    @keyframes bounceText {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Tampilan Bayi Pop-up */
+    .baby-box {
+      opacity: 0;
+      transform: scale(0.2) rotate(-10deg);
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+      display: none;
+    }
+
+    .baby-box.show {
+      display: block;
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    .baby-emoji {
+      font-size: 90px;
+      animation: babyFloat 2s infinite ease-in-out;
+      display: inline-block;
+    }
+
+    @keyframes babyFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    .baby-text {
+      font-weight: bold;
+      color: #ff4d8d;
+      font-size: 16px;
+      background: #fff0f5;
+      padding: 10px 15px;
+      border-radius: 15px;
+      border: 2px dashed #ffb6c1;
+      margin-top: 15px;
+      box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
+    }
+
+    /* Slider Sayang */
+    input[type="range"] {
+      width: 100%;
+      accent-color: #0077b6;
+      margin: 15px 0;
+    }
+
+    a.music-link {
+      display: inline-block;
+      margin: 10px 0 20px;
+      color: #0077b6;
+      font-weight: bold;
+      text-decoration: none;
+      background: #e0f7fa;
+      border: 1px solid #b2ebf2;
+      padding: 10px 20px;
+      border-radius: 20px;
+      transition: background 0.3s;
+    }
+
+    /* Animasi Kristal Es Melayang */
+    .ice-crystal {
+      position: absolute;
+      color: #00b4d8;
+      animation: floatUp 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      pointer-events: none;
+      font-size: 20px;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.8); opacity: 1; }
+      100% { transform: translateY(-80px) scale(1.4); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Salju -->
+  <div id="snowContainer"></div>
+
+  <div class="card">
+    <!-- STEP 1: Password -->
+    <div id="step1" class="step active">
+      <h2>Gerbang Es Elsa ❄️</h2>
+      <p>Masukkan tanggal lahir kamu (DDMMYY) untuk membuka:</p>
+      <input type="password" id="passInput" placeholder="******" maxlength="6">
+      <br>
+      <button onclick="checkPassword()">Buka</button>
+      <p id="passErr" style="color: #e63946; margin-top: 10px; font-size: 12px;"></p>
+    </div>
+
+    <!-- STEP 2: Hold -->
+    <div id="step2" class="step">
+      <h2>Hai Elsa Raisa Shafitri ✨</h2>
+      <p>Tahan tombol di bawah ini sebentar ya...</p>
+      <div class="hold-btn" id="holdBtn1">
+        <div class="hold-progress" id="holdProg1"></div>
+        <span class="hold-text">Tahan 2 Detik ❄️</span>
+      </div>
+    </div>
+
+    <!-- STEP 3: Kado Besar & Bayi Lucu -->
+    <div id="step3" class="step">
+      <h2 id="giftTitle">Kado Spesial Buat Azel 🎁</h2>
+      <div class="gift-stage">
+        <!-- Kado Besar -->
+        <div class="big-gift-wrapper" id="giftWrapper">
+          <div class="big-gift">🎁</div>
+          <div class="drag-hint">👉 Geser Kado Ke Kanan 👈</div>
+        </div>
+
+        <!-- Bayi Lucu (Sembunyi dulu) -->
+        <div class="baby-box" id="babyBox">
+          <div class="baby-emoji">👶🏻✨</div>
+          <div class="baby-text">BWAHAHH INI KADO NYA BAYI YA EHE 🤪💖</div>
+        </div>
+      </div>
+      <button id="afterGiftBtn" style="display: none; margin-top: 15px;" onclick="nextStep(4)">Lanjut Baca Pesan ➡️</button>
+    </div>
+
+    <!-- STEP 4: Pesan Manis -->
+    <div id="step4" class="step">
+      <h3>Dear Azel, 👑</h3>
+      <p>Selamat ulang tahun yang ke-15 ya! 🎉</p>
+      <p>Semoga di usiamu yang baru ini, langkahmu makin dimudahkan, selalu dikelilingi kebahagiaan, dan makin dekat dengan semua cita-citamu. Tetap jadi Azel yang baik, ceria, dan bersinar seperti Ratu Elsa! ✨</p>
+      <button onclick="nextStep(5)">Lanjut ➡️</button>
+    </div>
+
+    <!-- STEP 5: Pengirim -->
+    <div id="step5" class="step">
+      <p style="font-size: 12px; letter-spacing: 2px;">HADIAH SPESIAL DARI:</p>
+      <h1 style="color: #0077b6; margin: 10px 0 20px;">✨ Atar ✨</h1>
+      <p>Tahan tombol ini lagi untuk melanjutkannya!</p>
+      <div class="hold-btn" id="holdBtn2">
+        <div class="hold-progress" id="holdProg2"></div>
+        <span class="hold-text">Tahan Lagi 💙</span>
+      </div>
+    </div>
+
+    <!-- STEP 6: Persentase Sayang -->
+    <div id="step6" class="step">
+      <h2>Seberapa persen sayang kamu ke Atar? 🙈</h2>
+      <input type="range" id="loveRange" min="0" max="100" value="50" oninput="updateLoveVal(this.value)">
+      <h2 id="loveVal">50%</h2>
+      <br>
+      <button onclick="nextStep(7)">Lanjut ➡️</button>
+    </div>
+
+    <!-- STEP 7: Link Lagu & Kuis -->
+    <div id="step7" class="step">
+      <h2>Lagu Khusus Azel 🎶</h2>
+      <p>Dengarkan lagu pilihan ini ya:</p>
+      <a href="https://open.spotify.com" target="_blank" class="music-link">🎧 Putar Lagu Spesial</a>
+      
+      <div id="quiz1" style="margin-top: 15px;">
+        <p><b>Kamu sayang Atar gak, Azel? 🥺</b></p>
+        <button onclick="answerQuiz(1)">Sayang Banget!</button>
+        <button onclick="answerQuiz(1)">Sayang Dong!</button>
+      </div>
+
+      <div id="quiz2" style="margin-top: 15px; display: none;">
+        <p><b>Seneng gak? Bagus kan reward-nya? 💖</b></p>
+        <button onclick="answerQuiz(2)">Seneng Banget!</button>
+        <button onclick="answerQuiz(2)">Suka Banget!</button>
+      </div>
+    </div>
+
+    <!-- STEP 8: Penutup -->
+    <div id="step8" class="step">
+      <h2>Terima Kasih Ya! ❄️✨</h2>
+      <p>Makasih udah membaca pesan ini sampai selesai, Azel. Semoga hari-harimu selalu menyenangkan!</p>
+      <div style="font-size: 40px; margin-top: 15px;">❄️👑🩵✨</div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Animasi Salju Berjatuhan
+    const snowContainer = document.getElementById('snowContainer');
+    const snowflakes = ['❄', '❅', '❆', '✨'];
+    for (let i = 0; i < 30; i++) {
+      const flake = document.createElement('div');
+      flake.classList.add('snowflake');
+      flake.innerText = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+      flake.style.left = Math.random() * 100 + 'vw';
+      flake.style.animationDuration = Math.random() * 3 + 2 + 's';
+      flake.style.fontSize = Math.random() * 10 + 10 + 'px';
+      snowContainer.appendChild(flake);
+    }
+
+    // 2. Logic Password
+    function checkPassword() {
+      const input = document.getElementById('passInput').value;
+      if (input === "091011") {
+        nextStep(2);
+      } else {
+        document.getElementById('passErr').innerText = "Password salah! Coba tanggal lahir kamu (091011)";
+      }
+    }
+
+    // 3. Perpindahan Step (Smooth Transition)
+    function nextStep(stepNum) {
+      const current = document.querySelector('.step.active');
+      if (current) {
+        current.style.opacity = '0';
+        current.style.transform = 'scale(0.95) translateY(-10px)';
+        setTimeout(() => {
+          current.classList.remove('active');
+          const next = document.getElementById('step' + stepNum);
+          next.classList.add('active');
+        }, 400);
+      }
+      createCrystals();
+    }
+
+    // 4. Animasi Kristal Es
+    function createCrystals() {
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+          const crystal = document.createElement('div');
+          crystal.classList.add('ice-crystal');
+          crystal.innerText = Math.random() > 0.5 ? '❄️' : '✨';
+          crystal.style.left = Math.random() * 80 + 10 + '%';
+          crystal.style.top = Math.random() * 40 + 40 + '%';
+          document.querySelector('.card').appendChild(crystal);
+          setTimeout(() => crystal.remove(), 2000);
+        }, i * 120);
+      }
+    }
+
+    // 5. Logic Hold Button
+    function setupHold(btnId, progId, targetStep) {
+      const btn = document.getElementById(btnId);
+      const prog = document.getElementById(progId);
+      let timer;
+
+      const startHold = (e) => {
+        e.preventDefault();
+        prog.style.width = '100%';
+        timer = setTimeout(() => {
+          nextStep(targetStep);
+        }, 1500);
+      };
+
+      const stopHold = () => {
+        clearTimeout(timer);
+        prog.style.width = '0%';
+      };
+
+      btn.addEventListener('mousedown', startHold);
+      btn.addEventListener('mouseup', stopHold);
+      btn.addEventListener('mouseleave', stopHold);
+      btn.addEventListener('touchstart', startHold);
+      btn.addEventListener('touchend', stopHold);
+    }
+
+    setupHold('holdBtn1', 'holdProg1', 3);
+    setupHold('holdBtn2', 'holdProg2', 6);
+
+    // 6. Logic Geser Kado Besar -> Muncul Bayi
+    const giftWrapper = document.getElementById('giftWrapper');
+    const babyBox = document.getElementById('babyBox');
+    const giftTitle = document.getElementById('giftTitle');
+    const afterGiftBtn = document.getElementById('afterGiftBtn');
+    let isDragging = false, startX = 0, currentX = 0;
+
+    const onStart = (e) => {
+      isDragging = true;
+      startX = e.touches ? e.touches[0].clientX : e.clientX;
+    };
+
+    const onMove = (e) => {
+      if (!isDragging) return;
+      let x = (e.touches ? e.touches[0].clientX : e.clientX) - startX;
+      if (x > 0) {
+        currentX = x;
+        giftWrapper.style.transform = `translateX(${x}px) rotate(${x * 0.1}deg)`;
+      }
+      if (x > 120) { // Jika digeser cukup jauh ke kanan
+        isDragging = false;
+        openGift();
+      }
+    };
+
+    const onEnd = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      giftWrapper.style.transform = 'translateX(0px) rotate(0deg)';
+    };
+
+    function openGift() {
+      // Animasi kado menghilang
+      giftWrapper.style.transform = 'scale(1.3) rotate(15deg)';
+      giftWrapper.style.opacity = '0';
+      
+      setTimeout(() => {
+        giftWrapper.style.display = 'none';
+        giftTitle.innerText = "Surprise! 🎉";
+        
+        // Munculkan bayi dengan animasi halus
+        babyBox.classList.add('show');
+        afterGiftBtn.style.display = 'inline-block';
+        createCrystals();
+      }, 300);
+    }
+
+    giftWrapper.addEventListener('mousedown', onStart);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onEnd);
+    giftWrapper.addEventListener('touchstart', onStart);
+    window.addEventListener('touchmove', onMove);
+    window.addEventListener('touchend', onEnd);
+
+    // 7. Slider & Kuis
+    function updateLoveVal(val) {
+      document.getElementById('loveVal').innerText = val + '%';
+    }
+
+    function answerQuiz(num) {
+      createCrystals();
+      if (num === 1) {
+        document.getElementById('quiz1').style.display = 'none';
+        document.getElementById('quiz2').style.display = 'block';
+      } else {
+        nextStep(8);
+      }
+    }
+  </script>
+</body>
+</html>
 
